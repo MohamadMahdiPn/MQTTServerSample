@@ -4,6 +4,7 @@ using MQTTServerSample.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MQTTServerSample.Persistence.Migrations
 {
     [DbContext(typeof(MQTTServerSampleDbContext))]
-    partial class MQTTServerSampleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241115191258_AddTemperatureSensor")]
+    partial class AddTemperatureSensor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -177,49 +180,6 @@ namespace MQTTServerSample.Persistence.Migrations
                     b.ToTable("Sensors");
                 });
 
-            modelBuilder.Entity("MQTTServerSample.Domain.Entities.Sensors.SensorMessage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatorUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("SensorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatorUserId");
-
-                    b.HasIndex("SensorId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("SensorMessages");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -339,29 +299,6 @@ namespace MQTTServerSample.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("CreatorUser");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("MQTTServerSample.Domain.Entities.Sensors.SensorMessage", b =>
-                {
-                    b.HasOne("MQTTServerSample.Domain.Entities.IdentityModels.ApplicationUser", "CreatorUser")
-                        .WithMany()
-                        .HasForeignKey("CreatorUserId");
-
-                    b.HasOne("MQTTServerSample.Domain.Entities.Sensors.Sensor", "Sensor")
-                        .WithMany()
-                        .HasForeignKey("SensorId");
-
-                    b.HasOne("MQTTServerSample.Domain.Entities.IdentityModels.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatorUser");
-
-                    b.Navigation("Sensor");
 
                     b.Navigation("User");
                 });
