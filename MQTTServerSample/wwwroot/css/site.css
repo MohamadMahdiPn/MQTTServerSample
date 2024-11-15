@@ -1,22 +1,213 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+@font-face {
+    font-family: iransans;
+    src: url('../../fonts/IRANSansWeb(FaNum).ttf');
+}
+
+h1, h2, h3, h4, h5, p, input, button, a, select, textarea, canvas {
+    font-family: iransans !important;
+}
+
+    input[type="text"], input[type="submit"] {
+        font-family: iransans !important;
+    }
+/*================= Start Plate ==================*/
+.plate_input {
+    background-color: gainsboro;
+    border: 1px solid gray;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.plate_input_start {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.plate_input_end {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.plate_iran {
+    background-color: gainsboro;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    height: 30px;
+    padding: 3px 6px;
+    border: 1px solid gray;
+    border-left: 0;
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+/*================= End Plate ==================*/
+
+.bg_done {
+    background: #9addb6 !important;
+}
+
+.bg_cancel {
+    background: #f9c5c8 !important;
+}
+
+
+/*================= Start Truck ==================*/
+.truck-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.truck-image {
+    display: block;
+    width: 80vw;
+    max-width: 800px;
+    height: auto;
+    border: 2px solid #333;
+    border-radius: 10px;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 46%;
+    left: 110px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.section-btn {
+    padding: 40px 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.section-btn-success {
+    padding: 40px 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(0, 255, 0, 0.5);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.section-btn-warning {
+    padding: 40px 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(234, 239, 44, 0.5);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.section-btn-danger {
+    padding: 40px 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 0,0, 0.5);
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .section-btn:hover {
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+/*================= End Truck ==================*/
+
+/*================= Start Refresh Button ==================*/
+.refresh-btn {
+    
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+    .refresh-btn:hover {
+        background-color: #0056b3;
+    }
+
+.refresh-icon {
+    transition: transform 0.3s;
+}
+
+.refresh-btn:hover .refresh-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+/*================= End Refresh Button ==================*/
+
+
+.width12 {
+    width:1.2rem;
+}
+.svg-green {
+    filter: invert(42%) sepia(93%) saturate(1352%) hue-rotate(87deg) brightness(95%) contrast(119%);
+}
+.svg-red {
+    filter: invert(38%) sepia(22%) saturate(23) hue-rotate(-41deg) brightness(119%) contrast(120%);
+}
+.svg-blue {
+    filter: invert(100%) sepia(100%) saturate(1165%) hue-rotate(113deg) brightness(86%) contrast(88%);
+}
+.svg-orange {
+    filter: invert(55%) sepia(100%) saturate(3.5);
+}
+
+@font-face {
+    font-family: 'ds-digi';
+    src: url('../assets/fonts/ds-digital/ds-digi.ttf') format('truetype');
+}
+
+.sevenseg {
+    font-family: 'ds-digi', sans-serif !important;
+    color: red;
+    font-size: 4rem;
+}
+
+

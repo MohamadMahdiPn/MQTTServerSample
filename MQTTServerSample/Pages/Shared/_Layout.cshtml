@@ -1,51 +1,187 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - MQTTServerSample</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/MQTTServerSample.styles.css" asp-append-version="true" />
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta name="description" content="Spruha -  Admin Panel laravel Dashboard Template">
+    <meta name="author" content="Spruko Technologies Private Limited">
+    <meta name="keywords" content="admin laravel template, template laravel admin, laravel css template, best admin template for laravel, laravel blade admin template, template admin laravel, laravel admin template bootstrap 4, laravel bootstrap 4 admin template, laravel admin bootstrap 4, admin template bootstrap 4 laravel, bootstrap 4 laravel admin template, bootstrap 4 admin template laravel, laravel bootstrap 4 template, bootstrap blade template, laravel bootstrap admin template">
+
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/brand/favicon.ico" type="image/x-icon" />
+
+    <!-- Title -->
+    <title>داشبورد</title>
+
+    @*  <!-- Font Awesome CSS for Icons -->  *@
+
+    @*  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> *@
+
+    <link href="/assets/cdns/bootstrap-icons-1.11.3/font/fonts/bootstrap-icons.woff" />
+    <link href="/assets/cdns/bootstrap-icons-1.11.3/font/fonts/bootstrap-icons.woff2" />
+
+
+
+    <link href="/assets/multiselect/plugins.css" rel="stylesheet" />
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    @*  <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> *@
+    <link href="/assets/plugins/web-fonts/plugin.css" rel="stylesheet" />
+
+    <link href="/assets/css-rtl/style/style.css" rel="stylesheet">
+    <link href="/assets/css-rtl/skins.css" rel="stylesheet">
+    <link href="/assets/css-rtl/dark-style.css" rel="stylesheet">
+    <link href="/assets/css-rtl/colors/default.css" rel="stylesheet">
+
+    <link href="/assets/plugins/web-fonts/icons.css" rel="stylesheet" />
+    <link href="/assets/plugins/web-fonts/font-awesome/font-awesome.min.css" rel="stylesheet">
+
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="/assets/css-rtl/colors/color.css">
+    <link rel="stylesheet" href="/assets/plugins/multipleselect/multiple-select.css">
+    <link href="/assets/css-rtl/sidemenu/sidemenu.css" rel="stylesheet">
+    <link href="/assets/plugins/fileuploads/css/fileupload.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet" />
+    <link href="/lib/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/js/datepicker/jalalidatepicker.min.css">
+    <link rel="stylesheet" href="/assets/js/chart.flot.js" />
+    <script src="/js/site.js"></script>
+    <script src="/js/jqueryv3.6.4.min.js"></script>
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">MQTTServerSample</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+
+<body class="main-body leftmenu">
+    <div class="page">
+        <div class="main-sidebar main-sidebar-sticky side-menu">
+            <div class="sidemenu-logo">
+                @*<a class="main-logo" href="index.html">
+                <img src="assets/img/brand/icon-light.png" class="header-brand-img desktop-logo" alt="لوگو">
+                <img src="assets/img/brand/icon-light.png" class="header-brand-img icon-logo" alt="لوگو">
+                <img src="assets/img/brand/icon-light.png" class="header-brand-img desktop-logo theme-logo" alt="لوگو">
+                <img src="assets/img/brand/icon-light.png" class="header-brand-img icon-logo theme-logo" alt="لوگو">
+                </a>*@
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <partial name="_SideMenu" />
+            }
+
+
+        </div>
+
+        <div class="main-header side-header sticky">
+            <div class="container-fluid">
+                <div class="main-header-right">
+                    <a class="main-header-menu-icon" href="#" id="mainSidebarToggle"><span></span></a>
+                </div>
+                @*<div class="main-header-center">
+                <div class="responsive-logo">
+                <a href="index.html"><img src="~/assets/img/brand/logo.png" class="mobile-logo" alt="لوگو"></a>
+                <a href="index.html"><img src="~/assets/img/brand/logo-light.png" class="mobile-logo-dark" alt="لوگو"></a>
+                </div>
+                </div>*@
+                <partial name="_HeaderPartial" />
+            </div>
+        </div>
+        <!-- Mobile-header -->
+        <div class="mobile-main-header">
+            <div class="mb-1 navbar navbar-expand-lg  nav nav-item  navbar-nav-right responsive-navbar navbar-dark  ">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <div class="d-flex order-lg-2 mr-auto">
+
+                        <div class="dropdown main-profile-menu">
+                            <a class="d-flex" href="#">
+                                <span class="main-img-user"><img alt="آواتار" src="assets/img/users/1.jpg"></span>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="header-navheading">
+                                    <h6 class="main-notification-title">نام شخص</h6>
+                                    <p class="main-notification-text">ادمین</p>
+                                </div>
+                                <a class="dropdown-item" href="signin.html">
+                                    <i class="fe fe-power"></i> خروج از سیستم
+                                </a>
+                            </div>
+                        </div>
+                        <div class="dropdown  header-settings">
+                            <a href="#" class="nav-link icon" id="sidebar-icon" data-bs-toggle="sidebar-left" data-bs-target=".sidebar-left">
+                                <i class="fe fe-align-left header-icons"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 1403 - MQTTServerSample - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
-    </footer>
+        <!-- Mobile-header closed -->
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+        <div class="main-content side-content pt-0">
+            @RenderBody()
+        </div>
+        <div class="main-footer text-center">
+            <div class="container">
+                <div class="row row-sm">
+                    <div class="col-md-12">
+                        <span>> کلیه حقوق محفوظ است</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#top" id="back-to-top"><i class="fe fe-arrow-up"></i></a>
+
+
+
+    <script src="/assets/multiselect/select2.js"></script>
+    <script src="/assets/multiselect/select2.min.js"></script>
+
+    <script src="./assets/plugins/jquery-ui/ui/widgets/datepicker.js"></script>
+
+    <script src="/assets/plugins/jquery/jquery.min.js"></script>
+
+    <script src="/assets/plugins/bootstrap/js/popper.min.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap-rtl.js"></script>
+
+    <script src="/assets/plugins/perfect-scrollbar/perfect-scrollbar.min-rtl.js"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap-rtl.js"></script>
+    <script src="/assets/plugins/sidemenu/sidemenu-rtl.js"></script>
+    <script src="/assets/plugins/sidebar/sidebar-rtl.js"></script>
+    <script src="/assets/plugins/peity/jquery.peity.min.js"></script>
+    <script src="/assets/js/index.js"></script>
+    <script src="/assets/js/sticky.js"></script>
+    <script src="/assets/js/custom.js"></script>
+    <script src="/assets/js/modal.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js" integrity="sha512-L0Shl7nXXzIlBSUUPpxrokqq4ojqgZFQczTYlGjzONGTDAcLremjwaWv5A+EDLnxhQzY5xUZPWLOLqYRkY0Cbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="/assets/plugins/fileuploads/js/fileupload.js"></script>
+    <script src="/assets/plugins/fileuploads/js/file-upload.js"></script>
+    <script type="text/javascript" src="/js/datepicker/jalalidatepicker.min.js"></script>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js" integrity="sha512-7U4rRB8aGAHGVad3u2jiC7GA5/1YhQcQjxKeaVms/bT66i3LVBMRcBI9KwABNWnxOSwulkuSXxZLGuyfvo7V1A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+    <script src="js/site.js"></script>
+    <script src="/lib/sweetalert2/sweetalert2.min.js"></script>
+    @* <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  *@
+    <script src="/assets/cdns/chart.js"></script>
+
+    @*   <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script> *@
+    <script src="/assets/cdns/jquery.js"></script>
+
+    @*  <script src="/lib/persiandatepicker/js/persiandatepicker.min.js"></script> *@
+    <script>
+        if (document.getElementById("refreshButton")) {
+            document.getElementById("refreshButton").addEventListener("click", function () {
+                location.reload();
+            });
+        }
+
+    </script>
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+

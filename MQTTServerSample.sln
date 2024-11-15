@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTServerSample", "MQTTSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTServerSample.Console", "MQTTServerSample.Console\MQTTServerSample.Console.csproj", "{0AE6449F-9709-4B9D-932F-01F1C3366FA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTServerSample.Domain", "MQTTServerSample.Domain\MQTTServerSample.Domain.csproj", "{EE570A86-7D43-4E71-9313-D1F256EF71E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTServerSample.Domain", "MQTTServerSample.Domain\MQTTServerSample.Domain.csproj", "{EE570A86-7D43-4E71-9313-D1F256EF71E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTServerSample.Persistence", "MQTTServerSample.Persistence\MQTTServerSample.Persistence.csproj", "{E1D2E3A7-016B-4CE9-94DA-A789E377FF1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTServerSample.Persistence", "MQTTServerSample.Persistence\MQTTServerSample.Persistence.csproj", "{E1D2E3A7-016B-4CE9-94DA-A789E377FF1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MQTTServerSample.Application", "MQTTServerSample.Application\MQTTServerSample.Application.csproj", "{71535B88-E53C-458D-9B1B-369B5066FFCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MQTTServerSample.Application", "MQTTServerSample.Application\MQTTServerSample.Application.csproj", "{71535B88-E53C-458D-9B1B-369B5066FFCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

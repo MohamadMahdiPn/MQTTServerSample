@@ -1,0 +1,72 @@
+﻿
+
+
+@{
+ 
+    var superAdmin  = await AuthorizationService.AuthorizeAsync(User, RolesName.SuperAdmin);
+    
+   
+    List<SideMenuLinkItem> linkItems = new List<SideMenuLinkItem>()
+    {
+        //parent
+        new (0,"","بخش کاربران","ti-user",superAdmin.Succeeded,0),
+        new (1,"/Users/UsersList","کاربران","ti-user",superAdmin.Succeeded,0),
+        new (2,"/Roles/RolesList", "نقش ها","ti-medall-alt",superAdmin.Succeeded,0),
+        
+        //parent
+        // new (4,"","بخش خودرو","ti-car",vehicleListPolicy.Succeeded ||unloadingPolicy.Succeeded||infractionsPolicy.Succeeded,4),
+        // new (5,"/vehicleInformations","خودرو های وارد شده" ,"ti-car",vehicleListPolicy.Succeeded,4),
+        // new (6,"/vehicleInformation/ExitedList","لیست خودرو های اخیر" ,"ti-truck",vehicleListPolicy.Succeeded,4),
+        // new (7,"/unloadings","لیست تخلیه","ti-menu-alt",unloadingPolicy.Succeeded,4),
+        // new (9,"VehicleInformation/MismatchedLicensePlateList","پلاک های نامنطبق","ti-write",mismatchedLicensePlatePolicy.Succeeded,4),
+
+        // //No parent
+        // new (8,"/InfractionReportList","گزارشات تخلف","ti-write",infractionsPolicy.Succeeded,-1),
+       
+        // //parent
+        // new (10,"","بخش آزمایشگاه","ti-stats-up",qcPolicy.Succeeded,10),
+        // new (11,"/Qc/QcReports","ازمایشگاه","ti-stats-up",qcPolicy.Succeeded,10),
+        // new (12,"/Qc/CompletedList","آزمایشات تکمیل شده","ti-stats-up",qcPolicy.Succeeded,10),
+       
+        // //parent
+        // new (13,"","بخش تنظیمات","ti-panel",clientConfigListPolicy.Succeeded || superAdmin.Succeeded||cameraConfigPolicy.Succeeded||humanHandlePolicy.Succeeded,13),
+        // new (14,"/ClientConfigs","لیست تنظیمات اتصال","ti-panel",  clientConfigListPolicy.Succeeded,13),
+        // new (15,"/Application/ConfigList", "تنظیمات نرم افزار","ti-settings",superAdmin.Succeeded,13),
+        // new (16,"/logs","لاگ","ti-files",superAdmin.Succeeded,13),
+        // new (17,"/CameraConfiguration","دوربین پلاک خوان","ti-video-camera",cameraConfigPolicy.Succeeded,13),
+        // new (18,"/HumanHandles/Index","مجوز ثبت دستی","ti-lock",humanHandlePolicy.Succeeded,13),
+
+        #region comment
+
+        // new (19,"/humanhandles/sendmanuallymessages","ارسال دستی","ti-email",sendMessagesManuallyPolicy.Succeeded,13),
+        // new ("/Qc/HydrometryList","تضمین کیفیت","ti-stats-up",qcPolicy.Succeeded),
+        
+        // new ("/ReportList", "گزارش ها","ti-file",superAdmin.Succeeded ),
+        // new ("/CameraConfiguration/Index","دوربین پلاک خوان","ti-video-camera",cameraConfigPolicy.Succeeded),
+        // new (9,"/Reports","گزارش ها","ti-file",userManagerPolicy.Succeeded,-1),
+        // new (){Link = "/Reports/List",linkIcon = "ti-widget", Title = "گزارشات",Permission = superAdmin.Succeeded}
+
+        #endregion
+      
+    };
+}
+
+@inject IAuthorizationService AuthorizationService
+<div class="main-sidebar-body">
+    <ul class="nav">
+        <li class="nav-header"><span class="nav-label">داشبورد</span></li>
+        <li class="nav-item">
+            <a class="nav-link" href="/">
+                <span class="shape1"></span>
+                <span class="shape2"></span>
+                <i class="ti-home sidemenu-icon"></i>
+                <span class="sidemenu-label">داشبورد</span>
+            </a>
+        </li>
+        <partial name="PartialItems/_SideMenuItemPartial" model="linkItems" />
+
+
+        
+
+    </ul>
+</div>

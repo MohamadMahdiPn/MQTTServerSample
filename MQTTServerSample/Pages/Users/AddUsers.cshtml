@@ -1,0 +1,86 @@
+﻿@page
+@attribute [Authorize]
+@model MQTTServerSample.Pages.Users.AddUsersModel
+@{
+}
+<div class="container-fluid">
+    <div class="page-header">
+        <div>
+            <h2 class="main-content-title tx-24 mg-b-5">افزودن کاربر</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item"><a href="/Users/UsersList">کاربران</a></li>
+                <li class="breadcrumb-item active" aria-current="page">افزودن کاربر</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row row-sm">
+        <div class="col-lg-12 col-md-12">
+            <div class="card custom-card mt-4">
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="row row-sm">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">نام</p>
+                                    <input type="text" asp-for="UserModel.FirstName" class="form-control" placeholder="نام">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">نام خانوادگی</p>
+                                    <input type="text" asp-for="UserModel.LastName" class="form-control" placeholder="نام خانوادگی">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">کد پرسنلی</p>
+                                    <input type="text" asp-for="UserModel.UserName" class="form-control" placeholder="کد پرسنلی">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">شماره تلفن</p>
+                                    <input type="text" class="form-control" asp-for="UserModel.PhoneNumber" placeholder="شماره تلفن ">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">ایمیل</p>
+                                    <input type="email" class="form-control" asp-for="UserModel.Email" placeholder="ایمیل ">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">کلمه عبور</p>
+                                    <input type="password" class="form-control" asp-for="UserModel.Password" placeholder="کلمه عبور ">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <p class="mg-b-10">تکرار کلمه عبور</p>
+                                    <input type="password" class="form-control" asp-for="UserModel.ConfirmPassword" placeholder="تکرار کلمه عبور">
+                                </div>
+                            </div>
+                            <ul>
+                                @foreach (var error in Model.Errors)
+                                {
+                                    <li>@error</li>
+                                }
+
+                            </ul>
+                            <div class="col-md-12 mt-3 ">
+                                <div class="row">
+                                    <div class="col-md-4 m-auto">
+                                        <input type="submit" class="btn btn-success w-100" value="ثبت کاربر" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

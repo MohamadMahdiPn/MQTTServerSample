@@ -10,4 +10,7 @@ public class ApplicationUser:IdentityUser
     public DateTime CreatedDate { get; set; } = DateTime.Now;
 
 
+
+
+    public string GetDisplayName() => $"{FirstName} {LastName}";
 }

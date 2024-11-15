@@ -1,0 +1,91 @@
+﻿@page
+@attribute [Authorize]
+@model MQTTServerSample.Pages.Users.UsersListModel
+@{
+    int pageNumber = 1;
+    int i = 1;
+    string prevDisabled = !Model.PagingUsers.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.PagingUsers.HasNextPage ? "disabled" : "";
+}
+<div class="container-fluid">
+    <div class="page-header">
+        <div>
+            <h2 class="main-content-title tx-24 mg-b-5">لیست کاربران</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page">کاربران</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row row-sm">
+
+        <div class="col-lg-12 col-md-12">
+            <div class="card custom-card mt-4">
+                <div class="card-body">
+                    <div class="row row-sm">
+                        <div class="col-lg-4  mt-3 m-auto  ">
+                            <a href="/Users/AddUsers" class="btn w-100  btn-success btn-md">افزودن کاربر </a>
+                        </div>
+                        <div class="col-lg-12">
+
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <div class="table-responsive border">
+
+                                        <table class="table text-nowrap text-md-nowrap mg-b-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">نام کاربری</th>
+                                                    <th class="text-center"> وضعیت</th>
+                                                    <th class="text-center">عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var user in Model.PagingUsers.Select((data, indexes) => new { data, index = (indexes + ((Model.PagingUsers.PageIndex - 1) * Model.PagingUsers.PageSize)) + 1 }))
+                                                {
+                                                    <tr>
+                                                        <th class="text-center" scope="row">@user.index</th>
+                                                        <td class="text-center">
+                                                            @($"{user.data.GetDisplayName()}")  
+                                                            @if (Model.CurrentUser == user.data.Id)
+                                                            {
+                                                                <span class="badge badge-primary">شما</span>
+                                                            }
+                                                        </td>
+                                                        <td class="text-center @(user.data.LockoutEnabled? "text-success":"text-danger")">
+                                                            @(user.data.LockoutEnabled ? "فعال" : "غیر فعال")
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a class="btn ripple btn-primary btn-sm" asp-page="/Users/EditUser" asp-route-Id="@user.data.Id">ویرایش</a>
+                                                            <a class="btn ripple btn-secondary btn-sm" asp-page-handler="ChangeState" asp-route-userId="@user.data.Id"> غیرفعال</a>
+                                                            @* <a class="btn ripple btn-success btn-sm" asp-page-handler="Enable"> فعال</a> *@
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="example">
+                                <div class="row row-sm">
+                                    <ul class="pagination pagination-radius mb-0 mr-lg-3">
+                                        <li class="page-item @(prevDisabled)"><a class="page-link " aria-disabled="@prevDisabled" asp-route-pageNumber="@(Model.PagingUsers.PageIndex-1)"><i class="fas fa-angle-double-right "></i></a></li>
+                                        @for (i = 1; i <= Model.PagingUsers.TotalPages; i++)
+                                        {
+                                            string currentPage = Model.PageNumber == i ? "active" : "";
+                                            <li class="page-item @currentPage "><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                                        }
+                                        <li class="page-item @(nextDisabled)"><a class="page-link" aria-disabled="@nextDisabled" asp-route-pageNumber="@(Model.PagingUsers.PageIndex+1)"><i class="fas fa-angle-double-left"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

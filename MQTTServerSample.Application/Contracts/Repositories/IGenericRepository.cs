@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using MQTTServerSample.Application.Contracts.Bases;
 
 namespace MQTTServerSample.Application.Contracts.Repositories;
 
@@ -14,6 +15,5 @@ public interface IGenericRepository<TEntity> where TEntity : class, IBaseTable
     Task<bool> Delete(Guid id);
     Task<bool> SoftDelete(Guid id, string cUserId);
     Task<bool> Save();
-    Task<bool> ExecuteQuery(string query);
     Task<bool> Exist(Guid id);
 }

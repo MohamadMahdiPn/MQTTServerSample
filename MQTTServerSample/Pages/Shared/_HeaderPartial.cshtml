@@ -1,0 +1,42 @@
+﻿@{
+    var partialLink = new HeaderLinkItem()
+    {
+        Link = "/users/usermanager",
+        Title = "مدیریت گذرواژه"
+    };
+    var UserGivenName = User.FindFirst("GivenName")?.Value;
+    var UserGivenRoleName = User.FindFirst("GivenRoleName")?.Value;
+
+}
+<div class="main-header-right">
+    <div class="dropdown d-md-flex">
+        <a class="nav-link icon full-screen-link" href="#">
+            <i class="fe fe-maximize fullscreen-button fullscreen header-icons"></i>
+            <i class="fe fe-minimize fullscreen-button exit-fullscreen header-icons"></i>
+        </a>
+    </div>
+    <div class="dropdown main-profile-menu">
+        <a class="d-flex" href="#">
+            <span class="main-img-user"><img alt="آواتار" src="~/assets/img/user.png"></span>
+        </a>
+        <div class="dropdown-menu">
+            <div class="header-navheading">
+                <h6 class="main-notification-title">@UserGivenName</h6>
+                <p class="main-notification-text">@UserGivenRoleName</p>
+            </div>
+
+            <partial name="PartialItems/_HeaderItemPartial" model="partialLink" />
+
+            <form id="logoutForm" method="post" class="form-inline"
+                  asp-area="Identity"
+                  asp-page="/Account/logout"
+                  asp-route-returnUrl="@Url.Page("/", new { area = "" })">
+                <button id="logout" type="submit" class="dropdown-item">خروج از سیستم</button>
+            </form>
+
+        </div>
+    </div>
+    <button class="navbar-toggler navresponsive-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="تغییر پیمایش">
+        <i class="fe fe-more-vertical header-icons navbar-toggler-icon"></i>
+    </button>
+</div>
