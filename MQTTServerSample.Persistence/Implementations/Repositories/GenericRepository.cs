@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using MQTTServerSample.Application.Contracts.Bases;
 using MQTTServerSample.Application.Contracts.Repositories;
 using MQTTServerSample.Persistence.Data;
+using MQTTServerSample.Domain.Bases;
 
 namespace MQTTServerSample.Persistence.Implementations.Repositories;
 

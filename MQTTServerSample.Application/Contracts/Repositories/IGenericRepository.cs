@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using MQTTServerSample.Application.Contracts.Bases;
+using MQTTServerSample.Domain.Bases;
 
 namespace MQTTServerSample.Application.Contracts.Repositories;
 

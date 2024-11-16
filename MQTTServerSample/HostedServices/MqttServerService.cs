@@ -5,13 +5,18 @@ using MQTTnet.Client;
 using MQTTnet.Client.Options;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Server;
+using MQTTServerSample.Application.Contracts.Sensors;
+using MQTTServerSample.Application.DTOs.Sensors;
+using MQTTServerSample.Domain.Enums;
 public class MqttBackgroundService : BackgroundService
 {
     private readonly ILogger<MqttBackgroundService> _logger;
-
-    public MqttBackgroundService(ILogger<MqttBackgroundService> logger)
+    private readonly ISensorService _sensorService;
+    public MqttBackgroundService(IServiceScopeFactory serviceProvider, ILogger<MqttBackgroundService> logger)
     {
         _logger = logger;
+        _sensorService = serviceProvider.CreateScope()
+            .ServiceProvider.GetRequiredService<ISensorService>();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -22,7 +27,7 @@ public class MqttBackgroundService : BackgroundService
 
         var mqttServerOptions = new MqttServerOptionsBuilder()
             .WithDefaultEndpointPort(1883) // Default MQTT port
-            .WithConnectionValidator(context =>
+            .WithConnectionValidator(async context =>
             {
                 if (context.Username != "admin" || context.Password != "password")
                 {
@@ -30,7 +35,19 @@ public class MqttBackgroundService : BackgroundService
                     _logger.LogWarning($"Connection rejected for client: {context.ClientId}");
                     return;
                 }
-
+                var checkExists =await _sensorService.CheckExists(context.ClientId);
+                if (!checkExists.IsSucceeded)
+                {
+                    var sensorItem = new SensorDto()
+                    {
+                        CreatedDate = DateTime.Now,
+                        SensorIp = context.Endpoint,
+                        SensorName = context.ClientId,
+                        UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                        SensorType = SensorType.Temperature
+                    };
+                    var insert = await _sensorService.AddNew(sensorItem);
+                }
                 _logger.LogInformation($"Client connected: {context.ClientId}");
             })
             .WithApplicationMessageInterceptor(context =>

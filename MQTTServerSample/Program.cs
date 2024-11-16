@@ -14,7 +14,8 @@ builder.Services.ConfigureIdentityPolicies();
 builder.Services.AddHostedService<MqttBackgroundService>();
 
 
-
+//builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
