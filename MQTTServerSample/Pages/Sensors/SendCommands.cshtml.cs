@@ -30,7 +30,7 @@ namespace MQTTServerSample.Pages.Sensors
                 var mqttClient = mqttFactory.CreateMqttClient();
 
                 var mqttOptions = new MqttClientOptionsBuilder()
-                        .WithTcpServer("192.168.146.127", 1883) // Replace with your broker IP and port
+                        .WithTcpServer("192.168.146.227", 1883) // Replace with your broker IP and port
                         .WithCredentials("admin", "password") // Replace with your MQTT username and password
                         .WithClientId("RazorPagePublisher")
                         .WithCleanSession() // Optional: Clean session

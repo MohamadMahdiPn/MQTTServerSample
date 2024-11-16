@@ -6,7 +6,39 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="messages-container">
+    <h3>Last Messages</h3>
+    <ul id="messages-list">
+        <!-- Messages will be dynamically inserted here -->
+    </ul>
 </div>
+
+
+@section Scripts
+{
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/mqtthub")
+            .build();
+
+        connection.on("ReceiveMessage", (clientId, message) => {
+            const messagesList = document.getElementById("messages-list");
+            const existingItem = document.getElementById(clientId);
+
+            if (existingItem) {
+                existingItem.innerHTML = '<strong>Client ID:</strong> '+clientId+' <br /> <strong>Last Message:</strong> '+message;
+            } else {
+                const listItem = document.createElement("li");
+                listItem.id = clientId;
+                listItem.innerHTML = '<strong>Client ID:</strong>' + clientId + ' <br /> <strong>Last Message:</strong> ' + message;
+                messagesList.appendChild(listItem);
+            }
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+    </script>
+}

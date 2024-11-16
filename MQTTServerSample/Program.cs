@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configurations = builder.Configuration;
 builder.Services.ConfigurePersistenceServices(configurations);
 builder.Services.ConfigureIdentityPolicies();
-
+builder.Services.AddSignalR();
 builder.Services.AddHostedService<MqttBackgroundService>();
 
 
@@ -31,7 +31,7 @@ app.AppendMigrations();
 app.ApplyRoles();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.MapHub<MqttHub>("/mqtthub");
 app.UseRouting();
 
 app.UseAuthorization();

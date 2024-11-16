@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
 using MQTTnet;
 using MQTTnet.Client;
 using MQTTnet.Client.Options;
@@ -8,15 +9,20 @@ using MQTTnet.Server;
 using MQTTServerSample.Application.Contracts.Sensors;
 using MQTTServerSample.Application.DTOs.Sensors;
 using MQTTServerSample.Domain.Enums;
+using MQTTServerSample.Extensions;
 public class MqttBackgroundService : BackgroundService
 {
     private readonly ILogger<MqttBackgroundService> _logger;
     private readonly ISensorService _sensorService;
-    public MqttBackgroundService(IServiceScopeFactory serviceProvider, ILogger<MqttBackgroundService> logger)
+    private readonly IHubContext<MqttHub> _hubContext;
+    public MqttBackgroundService(IServiceScopeFactory serviceProvider,
+        ILogger<MqttBackgroundService> logger, IHubContext<MqttHub> hubContext)
     {
         _logger = logger;
         _sensorService = serviceProvider.CreateScope()
             .ServiceProvider.GetRequiredService<ISensorService>();
+        _hubContext = hubContext;
+
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -43,7 +49,8 @@ public class MqttBackgroundService : BackgroundService
                         CreatedDate = DateTime.Now,
                         SensorIp = context.Endpoint,
                         SensorName = context.ClientId,
-                        UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                        //UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                        UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
                         SensorType = SensorType.Temperature
                     };
                     var insert = await _sensorService.AddNew(sensorItem);
@@ -59,11 +66,13 @@ public class MqttBackgroundService : BackgroundService
                     CreatedDate = DateTime.Now,
                     Payload = context.ApplicationMessage.Topic,
                     SensorId = getId.DataItem.Id,
-                    UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                    //UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                    UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
                     Value = payload
 
                 };
                 var insert = await _sensorService.AddNewMessage(sensorMessage);
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage", context.ClientId, payload, cancellationToken: stoppingToken);
                 _logger.LogInformation($"Received message on topic '{context.ApplicationMessage.Topic}': {payload}");
             })
             .Build();
@@ -82,7 +91,7 @@ public class MqttBackgroundService : BackgroundService
         _logger.LogInformation("MQTT server stopped.");
     }
 
-
+  
     private Task HandleReceivedMessage(MqttApplicationMessageReceivedEventArgs args)
     {
         var payload = Encoding.UTF8.GetString(args.ApplicationMessage.Payload);

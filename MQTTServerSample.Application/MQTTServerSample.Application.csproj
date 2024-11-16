@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Contracts\Bases\**" />
+    <EmbeddedResource Remove="Contracts\Bases\**" />
+    <None Remove="Contracts\Bases\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Contracts\Users\" />
     <Folder Include="Contracts\Repositories\" />
   </ItemGroup>
