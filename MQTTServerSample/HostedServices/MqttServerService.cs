@@ -22,7 +22,7 @@ public class MqttBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Starting MQTT server...");
-
+        await _sensorService.SaveListToRedis();
         var mqttFactory = new MqttFactory();
 
         var mqttServerOptions = new MqttServerOptionsBuilder()
@@ -50,9 +50,20 @@ public class MqttBackgroundService : BackgroundService
                 }
                 _logger.LogInformation($"Client connected: {context.ClientId}");
             })
-            .WithApplicationMessageInterceptor(context =>
+            .WithApplicationMessageInterceptor(async context =>
             {
                 var payload = Encoding.UTF8.GetString(context.ApplicationMessage.Payload ?? Array.Empty<byte>());
+                var getId = await _sensorService.ReadIdFromNameRedis(context.ClientId);
+                var sensorMessage = new SensorMessageDto()
+                {
+                    CreatedDate = DateTime.Now,
+                    Payload = context.ApplicationMessage.Topic,
+                    SensorId = getId.Id,
+                    UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                    Value = payload
+
+                };
+                var insert = await _sensorService.AddNewMessage(sensorMessage);
                 _logger.LogInformation($"Received message on topic '{context.ApplicationMessage.Topic}': {payload}");
             })
             .Build();

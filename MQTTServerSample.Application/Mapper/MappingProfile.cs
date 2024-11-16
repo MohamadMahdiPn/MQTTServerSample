@@ -9,6 +9,7 @@ public class MappingProfile:Profile
 	public MappingProfile()
 	{
         CreateMap<Sensor, SensorDto>().ReverseMap();
-        
+        CreateMap<SensorMessage, SensorMessageDto>().ReverseMap();
+
     }
 }

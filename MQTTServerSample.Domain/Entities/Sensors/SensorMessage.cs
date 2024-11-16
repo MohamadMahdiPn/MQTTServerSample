@@ -18,7 +18,8 @@ public class SensorMessage : IBaseTable
     public virtual string Value { get; set; }
     public virtual Guid? SensorId { get; set; }
     public virtual Sensor Sensor { get; set; }
+    public string Payload { get; set; }
 
-  
+
 
 }
