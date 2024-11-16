@@ -12,4 +12,10 @@ public interface ISensorService
     Task<BaseResponse<SensorDto>> CheckExists(string sensorName);
 
     Task<BaseResponse<SensorMessageDto>> AddNewMessage(SensorMessageDto sensorMessageDto);
+    Task<BaseResponse<SensorDto>> GetAllSensors();
+    Task<BaseResponse<SensorDto>> GetSensorById(Guid id);
+    Task<BaseResponse<SensorMessageDto>> GetAllMessagesForSensor(Guid sensorId);
+
+
+
 }

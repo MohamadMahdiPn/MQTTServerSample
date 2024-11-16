@@ -1,0 +1,94 @@
+﻿@page
+@attribute [Authorize]
+@model MQTTServerSample.Pages.Sensors.SensorsListModel
+@{
+    int pageNumber = 1;
+    int i = 1;
+    string prevDisabled = !Model.PagingUsers.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.PagingUsers.HasNextPage ? "disabled" : "";
+}
+<div class="container-fluid">
+    <div class="page-header">
+        <div>
+            <h2 class="main-content-title tx-24 mg-b-5">لیست کاربران</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page">کاربران</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row row-sm">
+
+        <div class="col-lg-12 col-md-12">
+            <div class="card custom-card mt-4">
+                <div class="card-body">
+                    <div class="row row-sm">
+                      @*   <div class="col-lg-4  mt-3 m-auto  ">
+                            <a href="/Users/AddUsers" class="btn w-100  btn-success btn-md">افزودن کاربر </a>
+                        </div> *@
+                        <div class="col-lg-12">
+
+                            <div class="card custom-card">
+                                <div class="card-body">
+                                    <div class="table-responsive border">
+
+                                        <table class="table text-nowrap text-md-nowrap mg-b-0">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th class="text-center">نام کاربری</th>
+                                                    <th class="text-center"> آدرس IP</th>
+                                                    <th class="text-center"> نوع سنسور</th>
+                                                    <th class="text-center">تاریخ ثبت</th>
+                                                    <th class="text-center">عملیات</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var sensorItem in Model.PagingUsers.Select((data, indexes) => new { data, index = (indexes + ((Model.PagingUsers.PageIndex - 1) * Model.PagingUsers.PageSize)) + 1 }))
+                                                {
+                                                    <tr>
+                                                        <th class="text-center" scope="row">@sensorItem.index</th>
+                                                        <td class="text-center">
+                                                            @($"{sensorItem.data.SensorName}")
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @($"{sensorItem.data.SensorIp}")
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @($"{sensorItem.data.SensorType.ToString()}")
+                                                        </td>
+                                                        <td class="text-center">
+                                                            @($"{sensorItem.data.CreatedDate}")
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <a class="btn ripple btn-primary btn-sm" asp-page="/Sensors/SensorDetails" asp-route-Id="@sensorItem.data.Id">مشخصات</a>
+                                                           @*   <a class="btn ripple btn-secondary btn-sm" asp-page-handler="Sensors" asp-route-userId="@user.data.Id"> غیرفعال</a>
+                                                           *@
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="example">
+                                <div class="row row-sm">
+                                    <ul class="pagination pagination-radius mb-0 mr-lg-3">
+                                        <li class="page-item @(prevDisabled)"><a class="page-link " aria-disabled="@prevDisabled" asp-route-pageNumber="@(Model.PagingUsers.PageIndex-1)"><i class="fas fa-angle-double-right "></i></a></li>
+                                        @for (i = 1; i <= Model.PagingUsers.TotalPages; i++)
+                                        {
+                                            string currentPage = Model.PageNumber == i ? "active" : "";
+                                            <li class="page-item @currentPage "><a class="page-link" asp-route-pageNumber="@i">@i</a></li>
+                                        }
+                                        <li class="page-item @(nextDisabled)"><a class="page-link" aria-disabled="@nextDisabled" asp-route-pageNumber="@(Model.PagingUsers.PageIndex+1)"><i class="fas fa-angle-double-left"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

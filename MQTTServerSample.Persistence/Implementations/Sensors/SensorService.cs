@@ -53,7 +53,7 @@ public class SensorService : ISensorService
             IsSucceeded = check != null,
 
         };
-        
+
     }
 
 
@@ -115,4 +115,43 @@ public class SensorService : ISensorService
         };
     }
     #endregion
+
+    #region GetAll Sensors
+    public async Task<BaseResponse<SensorDto>> GetAllSensors()
+    {
+        var data = _sensorRepository.GetAll();
+        var listOfSensors = _mapper.Map<List<SensorDto>>(data);
+        return new()
+        {
+            DataItems = listOfSensors,
+        };
+    }
+    #endregion
+
+    #region Get Sensor
+    public async Task<BaseResponse<SensorDto>> GetSensorById(Guid id)
+    {
+        var data = await _sensorRepository.GetById(id);
+        return new()
+        {
+            DataItem = _mapper.Map<SensorDto>(data),
+            IsSucceeded = data != null
+        };
+    }
+    #endregion
+
+
+    public async Task<BaseResponse<SensorMessageDto>> GetAllMessagesForSensor(Guid sensorId)
+    {
+        var data = _sensorMessageRepository
+            .GetAll(x => x.SensorId == sensorId && x.CreatedDate >= DateTime.Now.AddHours(-4))
+            .OrderByDescending(x=>x.CreatedDate)
+            .ToList();
+
+        return new()
+        {
+            DataItems = _mapper.Map<List<SensorMessageDto>>(data)
+        };
+    }
 }
+

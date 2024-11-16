@@ -58,7 +58,7 @@ public class MqttBackgroundService : BackgroundService
                 {
                     CreatedDate = DateTime.Now,
                     Payload = context.ApplicationMessage.Topic,
-                    SensorId = getId.Id,
+                    SensorId = getId.DataItem.Id,
                     UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
                     Value = payload
 

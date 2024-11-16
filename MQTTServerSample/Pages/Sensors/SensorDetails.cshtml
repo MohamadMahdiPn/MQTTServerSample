@@ -1,0 +1,64 @@
+﻿@page
+@attribute [Authorize]
+@model MQTTServerSample.Pages.Sensors.SensorDetailsModel
+@{
+}
+<div class="container-fluid">
+    <div class="page-header">
+        <div>
+            <h2 class="main-content-title tx-24 mg-b-5">
+                <span>اطلاعات سنسور -</span>
+                <span>@($"{Model.SensorItem.SensorName} ") </span>
+            </h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                <li class="breadcrumb-item"><a href="/Users/UsersList">کاربران</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <span>اطلاعات سنسور</span>
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="row row-sm">
+        <div class="col-lg-12 col-md-12">
+            <div class="card custom-card mt-4">
+                <div class="card-body">
+                    <table class="table text-nowrap text-md-nowrap mg-b-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th class="text-center">تاریخ ثبت</th>
+                                <th class="text-center"> مبدا</th>
+                                <th class="text-center"> مقدار</th>
+                                <th class="text-center">عملیات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var messageItem in Model.Messages.Select((data, indexes) => new { data, index = (indexes + 1) }))
+                            {
+                                <tr>
+                                    <th class="text-center" scope="row">@messageItem.index</th>
+                                    <td class="text-center">
+                                        @($"{messageItem.data.CreatedDate}")
+                                    </td>
+                                    <td class="text-center">
+                                        @($"{messageItem.data.Payload}")
+                                    </td>
+                                    <td class="text-center">
+                                        @($"{messageItem.data.Value}")
+                                    </td>
+                                    <td class="text-center">
+                                        @($"{messageItem.data.CreatedDate}")
+                                    </td>
+                                    <td class="text-center">
+                                       
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
