@@ -6,11 +6,38 @@
     ViewData["Title"] = "Home page";
 }
 
-<div id="messages-container">
-    <h3>Last Messages</h3>
-    <ul id="messages-list">
-        <!-- Messages will be dynamically inserted here -->
-    </ul>
+<div class="container-fluid">
+    <div class="inner-body">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                <div class="card custom-card  m-3 p-3">
+                    <div class="card-body">
+                        <div class="card-item">
+                            <div class="card-item-icon card-icon">
+                                <i class="fe fe-mail sidemenu-icon" style="font-weight: 700;color: #6259ca; font-size: large;"></i>
+                            </div>
+                            <div class="card-item-title mb-2">
+                                <label class="main-content-label tx-20 font-weight-bold mb-1">دمای لحظه ای</label>
+                            </div>
+                            <div class="card-item-body">
+                                <div class="card-item-stat">
+                                    <h4 class="font-weight-bold" id="messageDisplay"></h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div>
+                    <h3>نمودار دما</h3>
+                    <canvas id="lineChart" width="800" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -18,27 +45,115 @@
 {
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 
-    <script>
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/mqtthub")
-            .build();
 
-        connection.on("ReceiveMessage", (clientId, message) => {
-            const messagesList = document.getElementById("messages-list");
-            const existingItem = document.getElementById(clientId);
+  <script>
+    // Setup Chart.js
+    const ctx = document.getElementById('lineChart').getContext('2d');
 
-            if (existingItem) {
-                existingItem.innerHTML = '<strong>Client ID:</strong> '+clientId+' <br /> <strong>Last Message:</strong> '+message;
-            } else {
-                const listItem = document.createElement("li");
-                listItem.id = clientId;
-                listItem.innerHTML = '<strong>Client ID:</strong>' + clientId + ' <br /> <strong>Last Message:</strong> ' + message;
-                messagesList.appendChild(listItem);
+    const chartData = {
+        labels: [], // Array of timestamps
+        datasets: [] // Initialize as empty, one dataset per clientId
+    };
+
+    const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true
+                }
+            },
+            scales: {
+                x: {
+                    type: 'time', // Time scale for x-axis
+                    time: {
+                        unit: 'second' // Show time in seconds (adjust as needed)
+                    },
+                    title: {
+                        display: true,
+                        text: 'زمان'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'دما'
+                    }
+                }
             }
-        });
+        }
+    });
 
-        connection.start().catch(err => console.error(err.toString()));
-    </script>
+    // Helper function to get or create a dataset for a clientId
+    function getOrCreateDataset(clientId) {
+        // Find existing dataset by clientId
+        let dataset = chartData.datasets.find(ds => ds.label === clientId);
+
+        if (!dataset) {
+            // If no dataset exists for this clientId, create one
+            dataset = {
+                label: clientId,
+                data: [], // Data values
+                borderColor: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`, // Random color, // Random color
+                backgroundColor: 'rgba(0,0,0, 0.2)',
+                tension: 0.1,
+                fill: true
+            };
+
+            chartData.datasets.push(dataset); // Add to datasets array
+        }
+
+        return dataset;
+    }
+
+    // Setup SignalR
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl('/mqtthub') // Adjust the endpoint based on your configuration
+        .build();
+
+    connection.on("ReceiveMessage", (clientId, message) => {
+        const timestamp = new Date(); // Current timestamp
+
+        // Update message display
+        const h4Element = document.getElementById("messageDisplay");
+        h4Element.textContent = message;
+
+        // Get or create the dataset for this clientId
+        const dataset = getOrCreateDataset(clientId);
+
+        // Add data to the dataset
+        dataset.data.push({ x: timestamp.toISOString(), y: parseFloat(message) }); // Use x, y format for time series
+
+        // Keep only the last 10 items in the dataset
+        if (dataset.data.length > 25) {
+            dataset.data.shift();
+        }
+
+        // Add timestamp to labels (ensure labels match longest dataset)
+        // if (chartData.labels.length < dataset.data.length) {
+        //     chartData.labels.push(timestamp.toISOString());
+        // } else if (chartData.labels.length > dataset.data.length) {
+        //     chartData.labels.shift();
+        // }
+
+        // Update the chart
+        lineChart.update();
+    });
+
+    // Start SignalR connection
+    connection.start()
+        .then(() => {
+            console.log("SignalR connected.");
+        })
+        .catch(err => {
+            console.error("SignalR connection failed: ", err);
+        });
+</script>
 }
