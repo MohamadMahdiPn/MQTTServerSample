@@ -49,8 +49,8 @@ public class MqttBackgroundService : BackgroundService
                         CreatedDate = DateTime.Now,
                         SensorIp = context.Endpoint,
                         SensorName = context.ClientId,
-                        UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
-                        //UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
+                        //UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                        UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
                         SensorType = SensorType.Temperature
                     };
                     var insert = await _sensorService.AddNew(sensorItem);
@@ -66,8 +66,8 @@ public class MqttBackgroundService : BackgroundService
                     CreatedDate = DateTime.Now,
                     Payload = context.ApplicationMessage.Topic,
                     SensorId = getId.DataItem.Id,
-                    UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
-                    //UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
+                    //UserId = "24a62487-a32d-4e6a-b9a8-f9dfdd0139b8",
+                    UserId = "52b85f78-b520-45b3-872f-89baac1e2e9c",
                     Value = payload
 
                 };
